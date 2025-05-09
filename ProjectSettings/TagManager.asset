@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Animal
   - Food
+  - PowerUp
+  - SlowTime
   layers:
   - Default
   - TransparentFX
