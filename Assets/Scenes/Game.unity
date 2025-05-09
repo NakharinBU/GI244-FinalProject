@@ -1590,6 +1590,7 @@ MonoBehaviour:
   waveConfigurations:
   - enemyPrefabs:
     - {fileID: 7591800460858037780, guid: 26fb4a3794983844781ecb674ca3474a, type: 3}
+    - {fileID: 2416638245963023934, guid: 68a440bc84a38a546ac020ba793b9f04, type: 3}
     enemyCount: 10
     spawnInterval: 1
     waveInterval: 12
@@ -1606,6 +1607,20 @@ MonoBehaviour:
     enemyCount: 20
     spawnInterval: 1
     waveInterval: 22
+  - enemyPrefabs:
+    - {fileID: 2416638245963023934, guid: 68a440bc84a38a546ac020ba793b9f04, type: 3}
+    - {fileID: 7185003671347115840, guid: 6bd185b7efc46da40a0b627112668951, type: 3}
+    - {fileID: 4856339743466158455, guid: ef7037a830d2bff408a015608b81e6e5, type: 3}
+    enemyCount: 30
+    spawnInterval: 1
+    waveInterval: 30
+  - enemyPrefabs:
+    - {fileID: 6580100387056117319, guid: 8c9a7cc791e54df419c413a260edd95b, type: 3}
+    - {fileID: 7185003671347115840, guid: 6bd185b7efc46da40a0b627112668951, type: 3}
+    - {fileID: 2416638245963023934, guid: 68a440bc84a38a546ac020ba793b9f04, type: 3}
+    enemyCount: 40
+    spawnInterval: 1
+    waveInterval: 40
   waveController: {fileID: 1888470326}
   countdownText: {fileID: 1338306259}
   countdownDuration: 5
