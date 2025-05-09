@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     // [10] declare a private InputAction variable for shooting
     private InputAction shootAction;
 
+    private InputAction ShoothomingAction;
+
     private void Awake()
     {
         // [2] find the action by name
@@ -26,6 +28,8 @@ public class PlayerController : MonoBehaviour
 
         // [11] find the action by name
         shootAction = InputSystem.actions.FindAction("Shoot");
+
+        ShoothomingAction = InputSystem.actions.FindAction("ShootHoming");
     }
 
     // Update is called once per frame
@@ -58,6 +62,12 @@ public class PlayerController : MonoBehaviour
         {
             // [13] spawn a projectile
             //Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
+            GameObject p = ProjectileObjectPool.GetInstance().Acquire();
+            p.transform.SetLocalPositionAndRotation(transform.position, p.transform.rotation);
+        }
+
+        if (ShoothomingAction.triggered)
+        {
             GameObject p = ProjectileObjectPool.GetInstance().Acquire();
             p.transform.SetLocalPositionAndRotation(transform.position, p.transform.rotation);
         }

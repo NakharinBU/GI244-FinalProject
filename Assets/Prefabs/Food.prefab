@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3691889810325826628}
   - component: {fileID: 4965066645658608271}
   - component: {fileID: 3727844554219169508}
+  - component: {fileID: 5635841852673535680}
   m_Layer: 0
   m_Name: Food
   m_TagString: Food
@@ -98,7 +99,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1713378943238565647}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af4f17ee9da6eb748945b825c002892b, type: 3}
   m_Name: 
@@ -177,3 +178,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPoint: 50
+--- !u!114 &5635841852673535680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713378943238565647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e95ee54a16401b648ad081b3d5c32f5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 20
+  rotateSpeed: 200
+  enemyTag: Animal
+  detectionRadius: 50
