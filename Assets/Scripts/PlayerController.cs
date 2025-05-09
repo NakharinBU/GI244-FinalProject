@@ -11,20 +11,28 @@ public class PlayerController : MonoBehaviour
 
     public GameObject projectilePrefab;
 
+    public GameObject projectilePrefabHoming;
+
     private float horizontalInput;
 
     private InputAction moveAction;
     private InputAction shootAction;
 
+<<<<<<< HEAD
     private bool hasPowerUp = false;
     private bool hasSlowTime = false;
 
     private List<MoveForward> moveTargets = new List<MoveForward>();
+=======
+    private InputAction ShoothomingAction;
+>>>>>>> Feature/Homing_Bullet
 
     private void Awake()
     {
         moveAction = InputSystem.actions.FindAction("Move");
         shootAction = InputSystem.actions.FindAction("Shoot");
+
+        ShoothomingAction = InputSystem.actions.FindAction("ShootHoming");
     }
 
     void Update()
@@ -38,6 +46,12 @@ public class PlayerController : MonoBehaviour
             transform.position = new Vector3(xRange, transform.position.y, transform.position.z);
 
         if (shootAction.triggered)
+        {
+            GameObject p = ProjectileObjectPool.GetInstance().Acquire();
+            p.transform.SetLocalPositionAndRotation(transform.position, p.transform.rotation);
+        }
+
+        if (ShoothomingAction.triggered)
         {
             GameObject p = ProjectileObjectPool.GetInstance().Acquire();
             p.transform.SetLocalPositionAndRotation(transform.position, p.transform.rotation);
