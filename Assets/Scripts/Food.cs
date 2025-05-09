@@ -6,7 +6,7 @@ public class Food : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<HealthV1>(out var health))
+        if (other.TryGetComponent<HealthV1>(out var health) && other.gameObject.CompareTag("Animal"))
         {
             health.TakeDamage(attackPoint);
         }
