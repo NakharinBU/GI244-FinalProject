@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     // [8] declare Projectile prefab variable
     public GameObject projectilePrefab;
 
+    public GameObject projectilePrefabHoming;
+
     private float horizontalInput;
 
     // [1] declare a private InputAction variable
