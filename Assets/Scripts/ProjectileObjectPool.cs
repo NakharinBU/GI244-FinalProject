@@ -4,6 +4,7 @@ using UnityEngine;
 public class ProjectileObjectPool : MonoBehaviour
 {
     [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private GameObject projectliePrefabHoming;
     [SerializeField] private int initialPoolSize = 10;
 
     private readonly List<GameObject> projectilePool = new();
@@ -36,12 +37,15 @@ public class ProjectileObjectPool : MonoBehaviour
     private void CreateNewProjectile()
     {
         GameObject p = Instantiate(projectilePrefab);
+        GameObject ph = Instantiate(projectliePrefabHoming);
         p.SetActive(false);
         projectilePool.Add(p);
+        ph.SetActive(false);
+        projectilePool.Add(ph);
     }
 
     public GameObject Acquire()
-    {
+    {   
         if (projectilePool.Count == 0)
         {
             CreateNewProjectile();
@@ -49,8 +53,11 @@ public class ProjectileObjectPool : MonoBehaviour
 
         GameObject p = projectilePool[0];
         projectilePool.Remove(p);
+        GameObject ph = projectilePool[0];
+        projectilePool.Remove(ph);
         //projectilePool.RemoveAt(0);
         p.SetActive(true);
+        ph.SetActive(true);
         return p;
     }
 
