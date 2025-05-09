@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,6 +19,8 @@ public class PlayerController : MonoBehaviour
     // [10] declare a private InputAction variable for shooting
     private InputAction shootAction;
 
+    private bool hasPowerUp = false;
+
     private void Awake()
     {
         // [2] find the action by name
@@ -36,6 +39,7 @@ public class PlayerController : MonoBehaviour
 
         // [4] move the player
         transform.Translate(horizontalInput * speed * Time.deltaTime * Vector3.right);
+
 
         // [5] keep the player inbounds
         // if (transform.position.x < -10)
@@ -62,4 +66,23 @@ public class PlayerController : MonoBehaviour
             p.transform.SetLocalPositionAndRotation(transform.position, p.transform.rotation);
         }
     }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("PowerUp"))
+        {
+            Debug.Log("GG");
+            Destroy(other.gameObject);
+            hasPowerUp = true;
+            StartCoroutine(PowerUpCooldown(5f));
+            speed = 30;
+            
+        }
+    }
+    IEnumerator PowerUpCooldown(float cooldownTime)
+    {
+        yield return new WaitForSeconds(cooldownTime);
+        hasPowerUp = false;
+        speed = 10;
+    }
+    
 }
