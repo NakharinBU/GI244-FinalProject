@@ -1,6 +1,8 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using UnityEditor.SearchService;
+using UnityEngine.SceneManagement;
 
 public class WaveSpawnManager : MonoBehaviour
 {
@@ -32,6 +34,8 @@ public class WaveSpawnManager : MonoBehaviour
                 Debug.Log("All waves completed!");
                 countdownText.text = "Completed!";
                 countdownText.gameObject.SetActive(true);
+                Invoke("EndCreditScene", 5f);
+                
             }
             else
             {
@@ -60,5 +64,10 @@ public class WaveSpawnManager : MonoBehaviour
 
         waveController.StartWave(waveConfigurations[currentWave]);
         waveInProgress = true;
+    }
+
+    public void EndCreditScene()
+    {
+        SceneManager.LoadScene("EndCredits");
     }
 }

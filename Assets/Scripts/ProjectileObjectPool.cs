@@ -1,69 +1,57 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class ProjectileObjectPool : MonoBehaviour
 {
-    [SerializeField] private GameObject projectilePrefab;
-    [SerializeField] private GameObject projectliePrefabHoming;
-    [SerializeField] private int initialPoolSize = 10;
+    public GameObject projectilePrefabNormal;
+    public GameObject projectilePrefabHoming;
+    public int poolSize = 10;
 
-    private readonly List<GameObject> projectilePool = new();
+    private List<GameObject> normalPool = new();
+    private List<GameObject> homingPool = new();
 
-    private static ProjectileObjectPool staticInstance;
+    private static ProjectileObjectPool instance;
 
-    private void Awake()
+    void Awake()
     {
-        if (staticInstance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        staticInstance = this;
+        if (instance != null) { Destroy(gameObject); return; }
+        instance = this;
     }
 
-    public static ProjectileObjectPool GetInstance() 
-    {
-        return staticInstance;
-    }
+    public static ProjectileObjectPool GetInstance() => instance;
 
-    private void Start()
+    void Start()
     {
-        for (int i = 0; i < initialPoolSize; i++)
+        for (int i = 0; i < poolSize; i++)
         {
-            CreateNewProjectile();
+            AddToPool(BulletType.Normal);
+            AddToPool(BulletType.Homing);
         }
     }
 
-    private void CreateNewProjectile()
+    void AddToPool(BulletType type)
     {
-        GameObject p = Instantiate(projectilePrefab);
-        GameObject ph = Instantiate(projectliePrefabHoming);
-        p.SetActive(false);
-        projectilePool.Add(p);
-        ph.SetActive(false);
-        projectilePool.Add(ph);
+        GameObject go = Instantiate(type == BulletType.Normal ? projectilePrefabNormal : projectilePrefabHoming);
+        go.SetActive(false);
+        if (type == BulletType.Normal) normalPool.Add(go);
+        else homingPool.Add(go);
     }
 
-    public GameObject Acquire()
-    {   
-        if (projectilePool.Count == 0)
-        {
-            CreateNewProjectile();
-        }
+    public GameObject Acquire(BulletType type)
+    {
+        List<GameObject> pool = type == BulletType.Normal ? normalPool : homingPool;
+        if (pool.Count == 0) AddToPool(type);
 
-        GameObject p = projectilePool[0];
-        projectilePool.Remove(p);
-        GameObject ph = projectilePool[0];
-        projectilePool.Remove(ph);
-        //projectilePool.RemoveAt(0);
-        p.SetActive(true);
-        ph.SetActive(true);
-        return p;
+        GameObject obj = pool[0];
+        pool.RemoveAt(0);
+        obj.SetActive(true);
+        return obj;
     }
 
-    public void Return(GameObject projectile)
+    public void Return(GameObject obj, BulletType type)
     {
-        projectilePool.Add(projectile);
-        projectile.SetActive(false);
+        obj.SetActive(false);
+        if (type == BulletType.Normal) normalPool.Add(obj);
+        else homingPool.Add(obj);
     }
 }

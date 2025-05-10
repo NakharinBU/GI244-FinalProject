@@ -1,4 +1,5 @@
 using UnityEngine;
+using static BulletIdentity;
 
 public class Food : MonoBehaviour
 {
@@ -6,11 +7,11 @@ public class Food : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<HealthV1>(out var health) && other.gameObject.CompareTag("Animal"))
+        if (other.TryGetComponent<HealthV1>(out var health) && other.CompareTag("Animal"))
         {
             health.TakeDamage(attackPoint);
         }
-        //Destroy(gameObject);
-        ProjectileObjectPool.GetInstance().Return(gameObject);
+
+        ProjectileObjectPool.GetInstance().Return(gameObject, BulletType.Normal);
     }
 }

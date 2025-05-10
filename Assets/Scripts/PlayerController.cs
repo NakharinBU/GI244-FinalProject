@@ -6,20 +6,16 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public float speed;
-
     public float xRange = 10;
 
-    public GameObject projectilePrefab;
-
-    private float horizontalInput;
+    public BulletSwitcher bulletSwitcher;
 
     private InputAction moveAction;
     private InputAction shootAction;
 
     private bool hasPowerUp = false;
     private bool hasSlowTime = false;
-
-    private List<MoveForward> moveTargets = new List<MoveForward>();
+    private List<MoveForward> moveTargets = new();
 
     private void Awake()
     {
@@ -29,18 +25,16 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        horizontalInput = moveAction.ReadValue<Vector2>().x;
+        float horizontalInput = moveAction.ReadValue<Vector2>().x;
         transform.Translate(horizontalInput * speed * Time.deltaTime * Vector3.right);
 
-        if (transform.position.x < -xRange)
-            transform.position = new Vector3(-xRange, transform.position.y, transform.position.z);
-        if (transform.position.x > xRange)
-            transform.position = new Vector3(xRange, transform.position.y, transform.position.z);
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -xRange, xRange), transform.position.y, transform.position.z);
 
         if (shootAction.triggered)
         {
-            GameObject p = ProjectileObjectPool.GetInstance().Acquire();
-            p.transform.SetLocalPositionAndRotation(transform.position, p.transform.rotation);
+            GameObject bullet = ProjectileObjectPool.GetInstance().Acquire(bulletSwitcher.currentBulletType);
+            bullet.transform.position = transform.position;
+            bullet.transform.rotation = transform.rotation;
         }
     }
 
@@ -48,7 +42,6 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("PowerUp"))
         {
-            Debug.Log("Speed");
             Destroy(other.gameObject);
             hasPowerUp = true;
             StartCoroutine(PowerUpCooldown(5f));
@@ -56,18 +49,12 @@ public class PlayerController : MonoBehaviour
         }
         else if (other.CompareTag("SlowTime"))
         {
-            Debug.Log("SlowTime");
             Destroy(other.gameObject);
             hasSlowTime = true;
-
             moveTargets.Clear();
             moveTargets.AddRange(FindObjectsByType<MoveForward>(FindObjectsSortMode.None));
-
             foreach (var target in moveTargets)
-            {
-                target.speed = 0f;
-            }
-
+                target.speed = 1f;
             StartCoroutine(SlowTime(5f));
         }
     }
@@ -83,13 +70,9 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(cooldownTime);
         hasSlowTime = false;
-
         foreach (var target in moveTargets)
         {
             if (target != null) target.speed = 4f;
         }
-
-        Debug.Log("Speed Restored");
     }
-
 }

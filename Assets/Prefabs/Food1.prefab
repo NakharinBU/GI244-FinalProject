@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3691889810325826628}
   - component: {fileID: 4965066645658608271}
   - component: {fileID: 3727844554219169508}
+  - component: {fileID: 8629826830580817971}
   m_Layer: 0
   m_Name: Food1
   m_TagString: Food
@@ -177,3 +178,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPoint: 50
+--- !u!114 &8629826830580817971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713378943238565647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 614b9dad3884c6e46b2e3e9c5e41b07c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
